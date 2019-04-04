@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-7-20 17:13:46 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.nankai.app.domain.Department" table="department" catalog="test">
+        <id name="departmentId" type="java.lang.Integer">
+            <column name="departmentId" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="organization" class="com.nankai.app.domain.Organization" fetch="select" lazy="false">
+            <column name="departmentOrganization" not-null="true" />
+        </many-to-one>
+        <many-to-one name="member" class="com.nankai.app.domain.Member" fetch="select" lazy="false">
+            <column name="departmentLeader" not-null="true" />
+        </many-to-one>
+        <property name="departmentName" type="string">
+            <column name="departmentName" not-null="true" />
+        </property>
+        <set name="members" table="member" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="memberDepartment" not-null="true" />
+            </key>
+            <one-to-many class="com.nankai.app.domain.Member" />
+        </set>
+        <set name="registersForRegisterIntention2" table="register" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="registerIntention2" />
+            </key>
+            <one-to-many class="com.nankai.app.domain.Register" />
+        </set>
+        <set name="registersForRegisterIntention1" table="register" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="registerIntention1" />
+            </key>
+            <one-to-many class="com.nankai.app.domain.Register" />
+        </set>
+    </class>
+</hibernate-mapping>

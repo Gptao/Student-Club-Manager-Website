@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-7-20 17:13:46 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.nankai.app.domain.Member" table="member" catalog="test">
+        <id name="memberId" type="java.lang.Integer">
+            <column name="memberId" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="department" class="com.nankai.app.domain.Department" fetch="select" lazy="false">
+            <column name="memberDepartment" not-null="true" />
+        </many-to-one>
+        <property name="memberName" type="string">
+            <column name="memberName" not-null="true" />
+        </property>
+        <property name="memberMajor" type="string">
+            <column name="memberMajor" not-null="false" />
+        </property>
+        <property name="memberHometown" type="string">
+            <column name="memberHometown" not-null="false" />
+        </property>
+        <property name="memberBirthday" type="string">
+            <column name="memberBirthday" not-null="true" />
+        </property>
+        <property name="memberGender" type="string">
+            <column name="memberGender" length="10" not-null="false" />
+        </property>
+        <property name="memberPassword" type="string">
+            <column name="memberPassword" length="20" not-null="true" />
+        </property>
+        <property name="memberPosition" type="string">
+            <column name="memberPosition" length="20" not-null="true" />
+        </property>
+        <property name="memberPhone" type="string">
+            <column name="memberPhone" length="20" not-null="true" />
+        </property>
+        <property name="memberPicture" type="string">
+            <column name="memberPicture" length="20" not-null="false" />
+        </property>
+        <set name="departments" table="department" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="departmentLeader" not-null="true" />
+            </key>
+            <one-to-many class="com.nankai.app.domain.Department" />
+        </set>
+    </class>
+</hibernate-mapping>

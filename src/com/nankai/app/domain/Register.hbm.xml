@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-7-20 17:13:46 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.nankai.app.domain.Register" table="register" catalog="test">
+        <id name="registerId" type="java.lang.Integer">
+            <column name="registerId" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="departmentByRegisterIntention1" class="com.nankai.app.domain.Department" fetch="select" lazy="false">
+            <column name="registerIntention1" />
+        </many-to-one>
+        <many-to-one name="departmentByRegisterIntention2" class="com.nankai.app.domain.Department" fetch="select" lazy="false">
+            <column name="registerIntention2" />
+        </many-to-one>
+        <property name="registerName" type="string">
+            <column name="registerName" />
+        </property>
+         <property name="registerPassword" type="string">
+            <column name="registerPassword" />
+        </property>
+        <property name="registerIntroduction" type="string">
+            <column name="registerIntroduction" length="1023" />
+        </property>
+        <property name="registerMajor" type="string">
+            <column name="registerMajor" />
+        </property>
+        <property name="registerHometown" type="string">
+            <column name="registerHometown" />
+        </property>
+        <property name="registerBirthday" type="string">
+            <column name="registerBirthday" />
+        </property>
+        <property name="registerGender" type="string">
+            <column name="registerGender" length="10" />
+        </property>
+        <property name="registerPhone" type="string">
+            <column name="registerPhone" length="20" />
+        </property>
+        <property name="registerPicture" type="string">
+            <column name="registerPicture" />
+        </property>
+        <property name="registerStatus" type="java.lang.Integer">
+            <column name="registerStatus" />
+        </property>
+        <property name="registerAdjust" type="string">
+            <column name="registerAdjust" length="10" />
+        </property>
+        <property name="registerDate" type="string">
+            <column name="registerDate" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

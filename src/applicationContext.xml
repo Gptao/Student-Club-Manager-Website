@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx.xsd">
+	
+<!-- 没有Hibernate配置文件 -->
+	<!-- 连接池信息 -->
+	<!-- 引入外部属性文件. -->
+	<context:property-placeholder location="classpath:jdbc.properties"/>
+	
+	<!-- 配置c3p0连接池 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driver}"/>
+		<property name="jdbcUrl" value="jdbc:mysql:///test?useUnicode=true&amp;characterEncoding=utf-8"/>
+		<property name="user" value="${jdbc.user}"/>
+		<property name="password" value="${jdbc.password}"/>
+	</bean>
+	
+	<!-- 零障碍整合 在spring配置文件中引入hibernate的配置文件 -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<!-- 管理连接池 -->
+		<property name="dataSource" ref="dataSource"/>
+		<!-- 配置Hibernate的属性 -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">false</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.connection.autocommit">false</prop>
+			</props>
+		</property>
+		
+		<!-- 加载映射 -->
+		 <property name="mappingResources">
+			<list>
+				<value>com/nankai/app/domain/Organization.hbm.xml</value>
+				<value>com/nankai/app/domain/Department.hbm.xml</value>
+				<value>com/nankai/app/domain/Activity.hbm.xml</value>
+				<value>com/nankai/app/domain/Register.hbm.xml</value>
+				<value>com/nankai/app/domain/Member.hbm.xml</value>
+				<value>com/nankai/app/domain/Material.hbm.xml</value>
+				<value>com/nankai/app/domain/Chatroom.hbm.xml</value>
+				<value>com/nankai/app/domain/Collection.hbm.xml</value>
+			</list>
+		</property> 
+	</bean>
+	<bean id="LoadImage" class="com.nankai.app.action.LoadImage" scope="prototype">
+		<property name="memberService" ref="memberService"/>
+	</bean>
+	<!-- 配置Action -->
+	<bean id="orgAction" class="com.nankai.app.action.OrgAction" scope="prototype">
+		<property name="orgService" ref="orgService"/>
+	</bean>
+	<bean id="actAction" class="com.nankai.app.action.ActivityAction" scope="prototype">
+		<property name="actService" ref="actService"></property>
+		<property name="orgService" ref="orgService"/>
+		<property name="collectionService" ref="collectionService"/>
+	</bean>
+	<bean id="registerAction" class="com.nankai.app.action.RegisterAction" scope="prototype">
+		<property name="registerService" ref="registerService"/>
+		<property name="departmentService" ref="departmentService"/>
+		<property name="memberService" ref="memberService"/>
+	</bean>
+	<bean id="materialAction" class="com.nankai.app.action.MaterialAction" scope="prototype">
+		<property name="materialService" ref="materialService"/>
+	</bean>
+	<bean id="memberAction" class="com.nankai.app.action.MemberAction" scope="prototype">
+		<property name="memberService" ref="memberService"/>
+		<property name="departmentService" ref="departmentService"/>
+	</bean>
+	<bean id="departmentAction" class="com.nankai.app.action.DepartmentAction" scope="prototype">
+		<property name="departmentService" ref="departmentService"/>
+	</bean>
+	<bean id="loginAction" class="com.nankai.app.action.LoginAction" scope="prototype"/>
+	<bean id="chatAction" class="com.nankai.app.action.ChatAction" scope="prototype">
+		<property name="chatService" ref="chatService"/>
+		<property name="memberService" ref="memberService"/>
+	</bean>
+	<bean id="collectionAction" class="com.nankai.app.action.CollectionAction" scope="prototype">
+		<property name="collectionService" ref="collectionService"/>
+	</bean>
+	
+	<!-- Service的配置 -->
+	<bean id="orgService" class="com.nankai.app.service.impl.OrgServiceImpl">
+		<property name="orgDao" ref="orgDao"/>
+	</bean>
+	<bean id="actService" class="com.nankai.app.service.impl.ActServiceImpl">
+		<property name="actDao" ref="actDao"></property>
+	</bean>
+	<bean id="registerService" class="com.nankai.app.service.impl.RegisterServiceImpl">
+		<property name="registerDao" ref="registerDao"/>
+		<property name="memberDao" ref="memberDao"></property>
+	</bean>
+	<bean id="materialService" class="com.nankai.app.service.impl.MaterialServiceImpl">
+		<property name="materialDao" ref="materialDao"/>
+	</bean>
+	<bean id="memberService" class="com.nankai.app.service.impl.MemberServiceImpl">
+		<property name="memberDao" ref="memberDao"/>
+	</bean>
+	<bean id="departmentService" class="com.nankai.app.service.impl.DepartmentServiceImpl">
+		<property name="departmentDao" ref="departmentDao"/>
+	</bean>
+	<bean id="chatService" class="com.nankai.app.service.impl.ChatServiceImpl">
+		<property name="chatDao" ref="chatDao"/>
+	</bean>
+	<bean id="collectionService" class="com.nankai.app.service.impl.CollectionServiceImpl">
+		<property name="collectionDao" ref="collectionDao"/>
+	</bean>
+	
+	<!-- DAO的配置 -->
+	<bean id="orgDao" class="com.nankai.app.dao.impl.OrgDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="actDao" class="com.nankai.app.dao.impl.ActDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="registerDao" class="com.nankai.app.dao.impl.RegisterDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="materialDao" class="com.nankai.app.dao.impl.MaterialDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="memberDao" class="com.nankai.app.dao.impl.MemberDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="departmentDao" class="com.nankai.app.dao.impl.DepartmentDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="chatDao" class="com.nankai.app.dao.impl.ChatDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="collectionDao" class="com.nankai.app.dao.impl.CollectionDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<!-- 管理事务 -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<!-- 注解开启事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+</beans>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<constant name="struts.devMode" value="true"></constant>
+    <package name="default" namespace="/" extends="struts-default">	
+
+		<interceptors>
+			<interceptor name="my" class="com.nankai.app.util.loginInterceptor">
+				<param name="excludeMethods">showAll,findById,add,showAllForList,managerSearchForAndroid,addActivityForAndroid,showAllCollection</param>
+
+			</interceptor>
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="my"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+		
+		<action name="Org_*" class="com.nankai.app.action.OrgAction" method="{1}">
+			<result name="success">index.jsp</result>
+			<result name="fail">WelcomePage.jsp</result>
+			<result name="intro">OrganizationIntroduction.jsp</result>
+			<result name="materialAdd">materialAdd.jsp</result>
+			<result name="materialUpdate">materialUpdate.jsp</result>
+		</action>
+		<action name="Act_*" class="com.nankai.app.action.ActivityAction" method="{1}">
+			<result name="success">index.jsp</result>
+			<result name="manager">activityManager.jsp</result>
+			<result name="update">ActivityUpdate.jsp</result>
+			<result name="fail">login.jsp</result>
+			<result name="content">activityIntroduction.jsp</result>
+    		<!-- <interceptor-ref name="myStack"></interceptor-ref> -->
+		</action>
+		<action name="login" class="com.nankai.app.action.LoginAction"> 
+            <result name="success">index.jsp</result>
+            <result name="fail">login.jsp</result>
+        </action>
+        <action name="loginForAndroid" class="com.nankai.app.action.LoginAction" method="login"> 
+            <result name="success">index.jsp</result>
+            <result name="fail">login.jsp</result>
+        </action>
+        <action name="register_*" class="com.nankai.app.action.RegisterAction" method="{1}"> 
+            <result name="success">registerManage.jsp</result>
+            <result name="register_search" type="chain">register_search</result>
+            <result name="fail">login.jsp</result>
+            <result name="findByID">addMember.jsp</result>
+            <result name="findByIDForDetail">registerIntroduction.jsp</result>
+            <result name="addsuccess">index.jsp</result>
+            <!-- <interceptor-ref name="myStack"></interceptor-ref> -->
+        </action>
+        <action name="material_*" class="com.nankai.app.action.MaterialAction" method="{1}">
+    		<result name="success">materialManager.jsp</result>
+    		<result name="material_search" type="redirectAction">material_search</result>
+    		<result name="findById">materialUpdate.jsp</result>
+    		<result name="fail">login.jsp</result>
+    		<!-- <interceptor-ref name="myStack"></interceptor-ref> -->
+    	</action>
+    	<action name="Member_*" class="com.nankai.app.action.MemberAction" method="{1}">
+    		<result name="success">login.jsp</result>
+    		<result name="fail">updatePassword.jsp</result>
+    		<result name="search_success">memberSearch.jsp</result>
+    		<result name="managerSearch_success">memberManager.jsp</result>
+		    <result name="member_findByID" type="chain">Member_findByID</result>
+		    <result name="update">updateMember.jsp</result>
+		    <result name="member_findMemberByName" type="chain">Member_findMemberByName</result>
+		    <result name="member_findMemberByDid" type="chain">Member_findMemberByDid</result>
+		    <result name="member_findMemberByGender" type="chain">Member_findMemberByGender</result>
+		    <result name="member_findMemberByPosition" type="chain">Member_findMemberByPosition</result>
+		    <result name="member_findMemberByMajor" type="chain">Member_findMemberByMajor</result>
+		    <result name="member_findMemberByHometown" type="chain">Member_findMemberByHometown</result>
+		    <result name="member_search" type="chain">Member_search</result>
+		    <result name="findMemberBySomething">memberSearch.jsp</result>
+    	</action>
+    	<action name="Department_*" class="com.nankai.app.action.DepartmentAction" method="{1}">
+    		<result name="success">addMember.jsp</result>
+    		<result name="activity">ActivityUpdate.jsp</result>
+    		<result name="registerjsp">register.jsp</result>
+    		<result name="updateMember">updateMember.jsp</result>
+    	</action>
+	    <action name="loadImage" class="com.nankai.app.action.LoadImage" method="GenerateImage">
+	    	<result name="true">index.jsp</result>
+	    	<result name="false">index.jsp</result>
+    	</action>
+    	<action name="Chat_*" class="com.nankai.app.action.ChatAction" method="{1}">
+    		<result name="success">OrganizationIntroduction.jsp</result>
+    		<result name="add">index.jsp</result>
+    	</action>
+    	<action name="Collection_*" class="com.nankai.app.action.CollectionAction" method="{1}">
+    		<result name="success">index.jsp</result>
+    	</action>
+    	<action name="loadImageForSwain_*" class="com.nankai.app.action.LoadImage" method="{1}">
+	    	<result name="true">index.jsp</result>
+	    	<result name="false">index.jsp</result>
+    	</action>
+    </package>
+
+</struts>

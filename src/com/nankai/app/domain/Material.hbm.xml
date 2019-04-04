@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-7-20 17:13:46 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.nankai.app.domain.Material" table="material" catalog="test">
+        <id name="materialId" type="java.lang.Integer">
+            <column name="materialId" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="organization" class="com.nankai.app.domain.Organization" fetch="select" lazy="false">
+            <column name="materialOrganization" not-null="true" />
+        </many-to-one>
+        <property name="materialName" type="string">
+            <column name="materialName" not-null="true" />
+        </property>
+        <property name="materialAmount" type="int">
+            <column name="materialAmount" not-null="true" />
+        </property>
+        <property name="materialRemarks" type="string">
+            <column name="materialRemarks" not-null="false" />
+        </property>
+    </class>
+</hibernate-mapping>

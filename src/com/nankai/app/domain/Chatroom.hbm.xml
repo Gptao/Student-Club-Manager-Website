@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-7-20 17:13:46 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.nankai.app.domain.Chatroom" table="chatroom" catalog="test">
+        <id name="messageId" type="java.lang.Integer">
+            <column name="messageId" />
+            <generator class="identity" />
+        </id>
+        <property name="messageAuthor" type="java.lang.Integer">
+            <column name="messageAuthor" not-null="false" />
+        </property>
+        <property name="messageContent" type="string">
+            <column name="messageContent" not-null="false" />
+        </property>
+        <property name="messageTime" type="string">
+            <column name="messageTime" not-null="false" />
+        </property>
+        <property name="messageMail" type="string">
+            <column name="messageMail" not-null="false" />
+        </property>
+        <property name="tag" type="java.lang.Integer">
+            <column name="tag" not-null="false" />
+        </property>
+    </class>
+</hibernate-mapping>

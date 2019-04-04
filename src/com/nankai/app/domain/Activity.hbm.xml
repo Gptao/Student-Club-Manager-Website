@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-7-20 17:13:46 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.nankai.app.domain.Activity" table="activity" catalog="test">
+        <id name="activityId" type="java.lang.Integer">
+            <column name="activityId" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="organization" class="com.nankai.app.domain.Organization" fetch="select" lazy="false">
+            <column name="activityOrganization" not-null="true" />
+        </many-to-one>
+        <property name="activityName" type="string">
+            <column name="activityName" not-null="true" />
+        </property>
+        <property name="activityLocation" type="string">
+            <column name="activityLocation" not-null="true" />
+        </property>
+        <property name="activityPicture" type="string">
+            <column name="activityPicture" not-null="true" />
+        </property>
+        <property name="activityIntroduction" type="string">
+            <column name="activityIntroduction" not-null="true" />
+        </property>
+        <property name="activityTime" type="string">
+            <column name="activityTime" length="20" not-null="true" />
+        </property>
+        <property name="activityContent" type="string">
+            <column name="activityContent" length="2047" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

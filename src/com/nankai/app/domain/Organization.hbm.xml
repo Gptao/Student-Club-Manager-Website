@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-7-20 17:13:46 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.nankai.app.domain.Organization" table="organization" catalog="test">
+        <id name="organizationId" type="java.lang.Integer">
+            <column name="organizationId" />
+            <generator class="identity" />
+        </id>
+        <property name="organizationName" type="string">
+            <column name="organizationName" not-null="true" />
+        </property>
+        <property name="organizationLeader" type="int">
+            <column name="organizationLeader" not-null="true" />
+        </property>
+        <property name="organizationIntroduction" type="string">
+            <column name="organizationIntroduction" length="1023" not-null="true" />
+        </property>
+        <set name="departments" table="department" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="departmentOrganization" not-null="true" />
+            </key>
+            <one-to-many class="com.nankai.app.domain.Department" />
+        </set>
+        <set name="activities" table="activity" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="activityOrganization" not-null="true" />
+            </key>
+            <one-to-many class="com.nankai.app.domain.Activity" />
+        </set>
+        <set name="materials" table="material" inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="materialOrganization" not-null="true" />
+            </key>
+            <one-to-many class="com.nankai.app.domain.Material" />
+        </set>
+    </class>
+</hibernate-mapping>
